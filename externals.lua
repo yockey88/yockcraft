@@ -13,6 +13,49 @@ external = {
     --     lib_dir = "%{wks.location}/external/assimp/lib/%{cfg.buildcfg}" ,
     --     configurations = "Debug" , "Release"
     -- } ,
+    SDL2 = {
+        include_dir = "%{wks.location}/external/SDL2/SDL2" ,
+        lib_name = "SDL2d" , 
+        lib_dir = "%{wks.location}/external/SDL2/lib/%{cfg.buildcfg}" ,
+    } , 
+    ImGui = {
+        include_dir = "%{wks.location}/external/imgui" ,
+        lib_name = "imgui" ,
+    } ,
+    Entt = {
+        include_dir = "%{wks.location}/external/entt" ,
+    } ,
+    Spdlog = {
+        include_dir = "%{wks.location}/external/spdlog/include" ,
+        lib_name = "spdlog" ,
+    } ,
+    Glad = {
+        include_dir = "%{wks.location}/external/glad/include" ,
+        lib_name = "glad" ,
+    } ,
+    GLM = {
+        include_dir = "%{wks.location}/external/glm" ,
+    } ,
+    MSDF = {
+        include_dir = "%{wks.location}/external/msdf-atlas-gen/msdfgen" ,
+    } ,
+    MSDFAtlasGen = {
+        include_dir = "%{wks.location}/external/msdf-atlas-gen" ,
+        lib_name = "msdf" ,
+    } ,
+    Choc = {
+        include_dir = "%{wks.location}/external/choc" ,
+    } ,
+    STB = {
+        include_dir = "%{wks.location}/external/stb" ,
+    } ,
+    Mono = {
+        include_dir = "%{wks.location}/external/mono/include" ,
+        lib_name = "mono-2.0-sgen" ,
+        lib_dir = "%{wks.location}/external/mono/lib/%{cfg.buildcfg}" ,
+        configurations = "Debug" , "Release"
+    } ,
+    
 }
 
 function LinkDependency(table , debug , target)

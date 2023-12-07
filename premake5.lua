@@ -1,6 +1,6 @@
 include "externals.lua"
 
-workspace "project"
+workspace "yockcraft"
     startproject "runtime"
     architecture "x64"
     configurations {
@@ -8,7 +8,7 @@ workspace "project"
         "Release"
     }
 
-    startproject "project"
+    startproject "yockcraft"
 
     language "C++"
     cppdialect "C++latest"
@@ -44,6 +44,13 @@ workspace "project"
 tdir = "%{wks.location}/bin/%{cfg.buildcfg}/%{prj.name}"
 odir = "%{wks.location}/bin_obj/%{cfg.buildcfg}/%{prj.name}"
 
-group "Project"
-include "./project"
+group "External"
+include("external/glad")
+include("external/spdlog")
+include("external/imgui")
+include("external/msdf-atlas-gen")
+group ""
+
+group "Yockcraft"
+include "./yockcraft"
 group ""

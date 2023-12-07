@@ -1,5 +1,5 @@
-EXE_NAME = "project"
-PROJECT_NAME = "project"
+EXE_NAME = "yockcraft"
+PROJECT_NAME = "yockcraft"
 
 TOOLS_DIR = "tools"
 
