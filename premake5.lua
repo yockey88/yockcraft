@@ -1,56 +1,102 @@
-include "externals.lua"
+require("ymake")
 
-workspace "yockcraft"
-    startproject "runtime"
-    architecture "x64"
-    configurations {
-        "Debug" ,
-        "Release"
-    }
+local config = {}
+config.wks_name = "yockcraft"
+config.architecture = "x64"
+config.start_project = "yockcraft"
+config.cpp_dialect = "C++latest"
+config.static_runtime = "on"
+config.target_dir = "%{wks.location}/bin/%{cfg.buildcfg}/%{prj.name}"
+config.obj_dir = "%{wks.location}/bin_obj/%{cfg.buildcfg}/%{prj.name}"
 
-    startproject "yockcraft"
+config.build_configurations = {
+  "Debug",
+  "Release"
+}
 
-    language "C++"
-    cppdialect "C++latest"
-    staticruntime "on"
+config.platforms = {
+  "Windows",
+}
 
-    flags { "MultiProcessorCompile" }
+config.groups = {
+  ["yockcraft"] = { "./yockcraft" },
+  ["runtime"] = { "./yockcraft-runtime" },
+  ["examples"] = { "./examples" }
+}
 
-    defines {
-        "_CRT_SECURE_NO_WARNINGS" ,
-        "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING" ,
-    }
+local choc = {}
+choc.name = "choc"
+choc.include_dir = "%{wks.location}/external/choc"
 
-    filter "action:vs*"
-        linkoptions { "/ignore:4099" }
-        disablewarnings { "68" }
+local entt = {}
+entt.name = "entt"
+entt.include_dir = "%{wks.location}/external/entt"
 
-    filter "configurations:Debug"
-        optimize "Off"
-        symbols "On"
+local glad = {}
+glad.name = "glad"
+glad.path = "./external/glad"
+glad.include_dir = "%{wks.location}/external/glad/include"
+glad.lib_name = "glad"
+glad.lib_dir = "%{wks.location}/bin/Debug/glad"
 
-    filter { "system:windows" , "configurations:Debug" }
-        sanitize { "Address" }
-        flags { "NoRuntimeChecks"}
-        defines { "NOMINMAX" }
+local glm = {}
+glm.name = "glm"
+glm.include_dir = "%{wks.location}/external/glm"
 
-    filter "configurations:Release"
-        optimize "On"
-        symbols "Default"
+local gtest = {}
+gtest.name = "gtest"
+gtest.path = "./external/gtest"
+gtest.include_dir = "%{wks.location}/external/gtest/googletest/include/gtest"
+gtest.lib_name = "gtest"
+gtest.lib_dir = "%{wks.location}/bin/Debug/gtest"
 
-    filter "system:windows"
-        buildoptions { "/EHsc" , "/Zc:preprocessor" , "/Zc:__cplusplus" }
+local imgui = {}
+imgui.name = "imgui"
+imgui.path = "./external/imgui"
+imgui.include_dir = "%{wks.location}/external/imgui"
+imgui.lib_name = "imgui"
+imgui.lib_dir = "%{wks.location}/bin/Debug/imgui"
 
-tdir = "%{wks.location}/bin/%{cfg.buildcfg}/%{prj.name}"
-odir = "%{wks.location}/bin_obj/%{cfg.buildcfg}/%{prj.name}"
+local magic_enum = {}
+magic_enum.name = "magic_enum"
+magic_enum.include_dir = "%{wks.location}/external/magic_enum"
 
-group "External"
-include("external/glad")
-include("external/spdlog")
-include("external/imgui")
-include("external/msdf-atlas-gen")
-group ""
+local sdl2 = {}
+sdl2.name = "sdl2"
+sdl2.include_dir = "%{wks.location}/external/SDL2/SDL2"
+sdl2.lib_dir = "%{wks.location}/external/SDL2/lib/%{cfg.buildcfg}"
+sdl2.lib_name = "SDL2"
+sdl2.debug_lib_name = "SDL2d"
+sdl2.configurations = { "Debug", "Release" }
 
-group "Yockcraft"
-include "./yockcraft"
-group ""
+local spdlog = {}
+spdlog.name = "spdlog"
+spdlog.path = "./external/spdlog"
+spdlog.include_dir = "%{wks.location}/external/spdlog/include"
+spdlog.lib_name = "spdlog"
+spdlog.lib_dir = "%{wks.location}/bin/Debug/spdlog"
+
+local msdf_atlas_gen = {}
+msdf_atlas_gen.name = "msdf_atlas_gen"
+msdf_atlas_gen.path = "./external/msdf-atlas-gen"
+msdf_atlas_gen.include_dor = "%{wks.location}/external/msdf-atlas-gen"
+msdf_atlas_gen.lib_name = "msdf_atlas_gen"
+msdf_atlas_gen.lib_dir = "%{wks.location}/bin/Debug/msdf-atlas-gen"
+
+local stb = {}
+stb.name = "stb"
+stb.include_dir = "%{wks.location}/external/stb"
+
+AddDependency(choc)
+AddDependency(entt)
+AddDependency(glad)
+AddDependency(glm)
+AddDependency(gtest)
+AddDependency(imgui)
+AddDependency(magic_enum)
+AddDependency(sdl2)
+AddDependency(spdlog)
+AddDependency(msdf_atlas_gen)
+AddDependency(stb)
+
+CppWorkspace(config)

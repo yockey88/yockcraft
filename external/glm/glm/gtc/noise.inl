@@ -616,6 +616,7 @@ namespace gtc
 			detail::permute(i.y + vec<3, T, Q>(T(0), i1.y, T(1)))
 			+ i.x + vec<3, T, Q>(T(0), i1.x, T(1)));
 
+#undef max
 		vec<3, T, Q> m = max(vec<3, T, Q>(0.5) - vec<3, T, Q>(
 			dot(x0, x0),
 			dot(vec<2, T, Q>(x12.x, x12.y), vec<2, T, Q>(x12.x, x12.y)),

@@ -1,34 +1,15 @@
-project "glad"
-    kind "StaticLib"
-    language "C"
-    staticruntime "on"
-    targetdir(tdir)
-    objdir(odir)
+local glad = {}
 
-    files {
-        "include/**.h",
-        "src/**.c"
-    }
+glad.name = "glad"
+glad.kind = "StaticLib"
+glad.language = "C"
 
-    externalincludedirs {
-        "include"
-    }
+glad.files = function() 
+  files { "./include/**.h", "./src/**.c" }
+end
 
-    filter { "system:windows" }
-        systemversion "latest"
+glad.include_dirs = function() 
+  includedirs { "./include" }
+end
 
-    filter { "system:macosx" }
-        systemversion "latest"
-        xcodebuildsettings {
-            ["MACOSX_DEPLOYMENT_TARGET"] = "10.15",
-            ["UseModernBuildSystem"] = "NO"
-        }
-
-    filter "configurations:Debug"
-        runtime "Debug"
-        symbols "on"
-
-    filter "configurations:Release"
-        runtime "Release"
-        symbols "off"
-        optimize "on"
+AddExternalProject(glad)

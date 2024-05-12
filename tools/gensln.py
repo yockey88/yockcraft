@@ -5,7 +5,7 @@ ret = 0;
 
 if project_settings.IsWindows():
     ret = subprocess.call(
-        ["cmd.exe" , "/c" , "premake\\premake5" , "vs2022"]
+        ["cmd.exe" , "/c" , "premake\\premake5.exe" , "vs2022"]
     )
     if (ret != 0):
         sys.exit(ret)

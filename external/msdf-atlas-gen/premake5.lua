@@ -1,43 +1,36 @@
-project "msdf"
-    kind "StaticLib"
-    language "C++"
-    cppdialect "C++20"
-    staticruntime "on"
-    targetdir(tdir)
-    objdir(odir)
+local msdf_atlas_gen = {}
 
-    files {
-        "artery-font-format/**.h" ,
-        "artery-font-format/**.hpp" ,
-        "msdfgen/**.h" ,
-        "msdfgen/**.hpp" ,
-        "msdfgen/**.cpp" ,
-        "msdf-atlas-gen/**.h" ,
-        "msdf-atlas-gen/**.hpp" ,
-        "msdf-atlas-gen/**.cpp" ,
-    }
+msdf_atlas_gen.name = "msdf_atlas_gen"
+msdf_atlas_gen.kind = "StaticLib"
+msdf_atlas_gen.language = "C++"
+msdf_atlas_gen.cppdialect = "C++latest"
 
-    includedirs {
-        "." ,
-        "artery-font-format" ,
-        "msdfgen" ,
-        "msdfgen/core" ,
-        "msdfgen-ext" ,
-        "msdfgen-atlas-gen" ,
-    }
+msdf_atlas_gen.files = function() 
+  files {
+    "artery-font-format/**.h" ,
+    "artery-font-format/**.hpp" ,
+    "msdfgen/**.h" ,
+    "msdfgen/**.hpp" ,
+    "msdfgen/**.cpp" ,
+    "msdf-atlas-gen/**.h" ,
+    "msdf-atlas-gen/**.hpp" ,
+    "msdf-atlas-gen/**.cpp" ,
+  }
+end
 
-    defines {
-        "MSDFGEN_USE_LODEPNG" ,
-    }
+msdf_atlas_gen.include_dirs = function() 
+  includedirs {
+    "." ,
+    "artery-font-format" ,
+    "msdfgen" ,
+    "msdfgen/core" ,
+    "msdfgen-ext" ,
+    "msdfgen-atlas-gen" ,
+  }
+end
 
-    filter { "system:windows" }
-        systemversion "latest"
- 
-    filter "configurations:Debug"
-        runtime "Debug"
-        symbols "on"
+msdf_atlas_gen.defines = function() 
+  defines { "MSDFGEN_USE_LODEPNG" }
+end
 
-    filter "configurations:Release"
-        runtime "Release"
-        symbols "off"
-        optimize "on"
+AddExternalProject(msdf_atlas_gen)

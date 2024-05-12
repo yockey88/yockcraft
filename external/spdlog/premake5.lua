@@ -1,33 +1,20 @@
-project "spdlog"
-    kind "StaticLib"
-    language "C++"
-    cppdialect "C++20"
-    staticruntime "on"
+local spdlog = {}
 
-    targetdir(tdir)
-    objdir(odir)
+spdlog.name = "spdlog"
+spdlog.kind = "StaticLib"
+spdlog.language = "C++"
+spdlog.cppdialect = "C++latest"
 
-    files {
-        "include/**.h",
-        "src/**.cpp"
-    }
+spdlog.files = function() 
+  files { "./include/**.h" , "./src/**.cpp" }
+end
 
-    includedirs {
-        "include"
-    }
+spdlog.include_dirs = function() 
+  includedirs { "./include" }
+end
 
-    defines {
-        "SPDLOG_COMPILED_LIB"
-    }
-    
-    filter { "system:windows" }
-        systemversion "latest"
+spdlog.defines = function() 
+  defines { "SPDLOG_COMPILED_LIB" }
+end
 
-    filter "configurations:Debug"
-        runtime "Debug"
-        symbols "on"
-
-    filter "configurations:Release"
-        runtime "Release"
-        symbols "off"
-        optimize "on"
+AddExternalProject(spdlog)

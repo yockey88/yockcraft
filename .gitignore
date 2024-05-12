@@ -2,6 +2,10 @@
 bin/
 bin_obj/
 
+.cache/
+
+other/
+
 # Prerequisites
 *.d
 

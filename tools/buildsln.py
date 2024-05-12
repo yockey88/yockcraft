@@ -16,11 +16,11 @@ if not os.path.exists("bin/{}/{}".format(CONFIG , project_settings.EXE_NAME)):
     first_build = True
 
 if project_settings.IsWindows():
-    VS_BUILD_PATH = os.environ["VS_BUILD_PATH"][8:-1]
-    VS_BUILD_PATH = "C:\\\\" + VS_BUILD_PATH
+    MSBUILD = os.environ["MSBUILD"][8:-1]
+    MSBUILD = "C:\\\\" + MSBUILD
     ret = subprocess.call(
         [
-            "cmd.exe" , "/c" , VS_BUILD_PATH , 
+            "cmd.exe" , "/c" , "{}".format(MSBUILD) , 
             "{}.sln".format(project_settings.PROJECT_NAME) , 
             "/property:Configuration={}".format(CONFIG)
         ]

@@ -1,4 +1,4 @@
-EXE_NAME = "yockcraft"
+EXE_NAME = "yockcraft-runtime"
 PROJECT_NAME = "yockcraft"
 
 TOOLS_DIR = "tools"

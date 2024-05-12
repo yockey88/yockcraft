@@ -1,40 +1,26 @@
-include "./postbuild.lua"
+local yockcraft = {}
+yockcraft.name = "yockcraft"
+yockcraft.path = "./yockcraft"
+yockcraft.kind = "StaticLib"
+yockcraft.language = "C++"
+yockcraft.cppdialect = "C++latest"
 
-projectname = "yockcraft"
+yockcraft.files = function()
+  files {
+    "./src/**.cpp" ,
+    "./src/**.hpp"
+  }
+end
 
-project (projectname)
-    kind "ConsoleApp"
-    language "C++"
-    cppdialect "C++latest"
-    staticruntime "on"
+yockcraft.include_dirs = function()
+  includedirs { "./src/" }
+end
 
-    targetdir(tdir)
-    objdir(odir)
+yockcraft.windows_configurations = function()
+  files {}
+  includedirs {}
+  systemversion "latest"
+  entrypoint "WinMainCRTStartup"
+end
 
-    files {
-        "./src/**.cpp",
-        "./include/**.hpp"
-    }
-
-    includedirs { "include/" }
-
-    filter "system:windows"
-        systemversion "latest"
-        entrypoint "WinMainCRTStartup" 
-
-    filter { "system:linux" }
-        result , err = os.outputof("pkg-config --cflags --libs gtk+-3.0")
-        linkoptions { result }
-
-    filter "configurations:Debug"
-        symbols "on"
-
-        ProcessDependencies("Debug")
-
-    filter "configurations:Release"
-        optimize "on"
-        symbols "off"
-
-        ProcessDependencies("Release")
-
-    RunPostBuildCommands()
+AddProject(yockcraft)
